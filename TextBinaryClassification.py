@@ -23,8 +23,12 @@ index_from = 3
 	oov_char=oov_char,
 	index_from=index_from)
 
+
+
+
+
 #  A dictionary mapping words to an integer index
-word_index = keras.datasets.imdb.get_word_index()
+word_index = keras.datasets.imdb.get_word_index() 
 
 #  A dictionary mapping integer indices to words
 inverted_word_index = dict(
@@ -37,7 +41,9 @@ inverted_word_index[oov_char] = "[OOV]"
 #  decoding the review back to English words
 decoded_sequence = " ".join(inverted_word_index[i] for i in train_data[0])
 
+print("Decoded review:", decoded_sequence)
 # print(decoded_sequence)
+
 
 
 # helper to vectorize the data, we will use one-hot encoding to convert the lists of integers into a binary matrix representation. This is a common way to prepare text data for use with neural networks.
@@ -64,12 +70,11 @@ y_val = y_train[:VALIDATION_SIZE]
 partial_y_train = y_train[VALIDATION_SIZE:]
 
 
-
 model = models.Sequential([ 
 	layers.Flatten(input_shape=(NUM_WORDS,)),
 	layers.Dense(16, activation="relu", input_shape=(NUM_WORDS,)),
 	layers.Dense(16, activation="relu"),
-	layers.Dense(1, activation="sigmoid"),
+	layers.Dense(1, activation="sigmoid"), # 0 or 1, since this is a binary classification problem
 ])
 
 model.compile(
